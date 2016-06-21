@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{900411D1-5C37-4EC8-953C-2AD5DE7220FC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RSIWebSiteQA</RootNamespace>
+    <AssemblyName>RSIWebSiteQA</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="RelevantCodes.ExtentReports">
+      <HintPath>..\packages\ExtentReports.2.41.0\lib\RelevantCodes.ExtentReports.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.53.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.53.0\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PageObjects\0-WhatWeDo\ApplicationManagementPage.cs" />
+    <Compile Include="PageObjects\0-WhatWeDo\BIAnalyticsPage.cs" />
+    <Compile Include="PageObjects\0-WhatWeDo\QualityAssurancePage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\OverviewPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSIAwardsPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSIBoardOfDirectorsPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSICommunityPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSIDevCentersPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSINewsPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSIOurLeadershipTeamPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSIOurPartnersPage.cs" />
+    <Compile Include="PageObjects\3-AboutRSI\AboutRSIPressReleasesPage.cs" />
+    <Compile Include="PageObjects\0-WhatWeDo\ApplicationDevelopmentPage.cs" />
+    <Compile Include="PageObjects\6-App\AppPage.cs" />
+    <Compile Include="PageObjects\8-ApplyNow\ApplyNowPage.cs" />
+    <Compile Include="PageObjects\4-Blog\BlogPage.cs" />
+    <Compile Include="PageObjects\5-Careers\OverviewPage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersApplicationPage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersCareerEventsPage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersJobSearchPage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersRSICulturePage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersTrainingPage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersUniversityPartnershipsPage.cs" />
+    <Compile Include="PageObjects\5-Careers\CareersYourBenefitsPage.cs" />
+    <Compile Include="PageObjects\7-Contact\ContactPage.cs" />
+    <Compile Include="PageObjects\0-WhatWeDo\OverviewPage.cs" />
+    <Compile Include="PageObjects\MainMenu.cs" />
+    <Compile Include="PageObjects\PageFooter.cs" />
+    <Compile Include="PageObjects\PageHeader.cs" />
+    <Compile Include="PageObjects\2-Results\ResultsPage.cs" />
+    <Compile Include="PageObjects\1-SmarterOutsourcing\OverviewPage.cs" />
+    <Compile Include="PageObjects\1-SmarterOutsourcing\SmarterOutsourcingBenefitsPage.cs" />
+    <Compile Include="PageObjects\1-SmarterOutsourcing\SmarterOutsourcingFAQPage.cs" />
+    <Compile Include="PageObjects\1-SmarterOutsourcing\SmarterOutsourcingWhatToExpectPage.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
