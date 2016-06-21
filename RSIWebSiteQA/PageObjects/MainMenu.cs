@@ -27,7 +27,7 @@ namespace RSIWebSiteQA.PageObjects
         [FindsBy(How = How.Id, Using = "mega-menu-item-6474")]
         private IWebElement BlogMenu { get; set; }
 
-        [FindsBy(How = How.Id, Using = "mega-menu-item-6475")]
+        [FindsBy(How = How.LinkText, Using = "Careers")]  // The mega-menu-item-6475 locator is not valid from the Blog page
         private IWebElement CareersMenu { get; set; }
 
         [FindsBy(How = How.Id, Using = "mega-menu-item-6485")]

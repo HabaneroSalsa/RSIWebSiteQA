@@ -85,7 +85,7 @@ namespace RSIWebSiteQA.PageObjects._0_WhatWeDo
             QAExpander.Click();
         }
 
-        public string GetAppManText()
+        public string GetQAText()
         {
             string qAText = QAText.Text;
             return qAText;
@@ -96,7 +96,7 @@ namespace RSIWebSiteQA.PageObjects._0_WhatWeDo
             QAExpander.Click();
         }
 
-        public string GetAppManText()
+        public string GetBIText()
         {
             string bIText = BIText.Text;
             return bIText;
