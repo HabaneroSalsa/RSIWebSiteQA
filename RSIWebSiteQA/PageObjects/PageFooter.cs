@@ -18,25 +18,38 @@ namespace RSIWebSiteQA.PageObjects
         [FindsBy(How = How.CssSelector, Using = ".copyright-text.eight.columns")]
         private IWebElement FooterText { get; set; }
 
+        [FindsBy(How = How.XPath, Using = ".//*[@id='text-2']/div")]
+        private IWebElement HQText { get; set; }
+
+
         public PageFooter(IWebDriver driver)
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
         }
 
-        public void ClickRSIFooterLogo()
+        public bool RSIFooterLogodisplayed()
         {
-            FooterLogo.Click();
+            var footerLogoDisplayed = FooterLogo.Displayed;
+            return footerLogoDisplayed;
         }
 
-        public void GetFooterLogoSize()
+        public string GetFooterLogoSize()
         {
-            var HLSize = FooterLogo.Size;
+            var FLSize = FooterLogo.Size;
+            return FLSize.Width.ToString() + " x " + FLSize.Height.ToString();
         }
 
-        public void GetFooterText()
+        public string GetFooterText()
         {
-            var TextFooter = FooterText.Text;
+            var footerText = FooterText.Text;
+            return footerText;
+        }
+
+        public string GetHQText()
+        {
+            var hQText = HQText.Text;
+            return hQText;
         }
  
     }

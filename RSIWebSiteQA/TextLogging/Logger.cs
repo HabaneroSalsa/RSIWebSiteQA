@@ -14,16 +14,46 @@ namespace RSIWebSiteQA.TextLogging
         static string LogFile = System.IO.Path.Combine(appSettings["LogDirectory"] == null ? Environment.CurrentDirectory : appSettings["LogDirectory"],
            appSettings["LogPrefix"] == null ? "NUnitTest" : appSettings["LogPrefix"] + string.Format("_{0:yyyyMMddHHmmss}.log", DateTime.Now));
 
-        // Logging definition start
-        public static void QATextLog(string str)
+        static QALog()
         {
-            QATextLog(str, null);
-            return;
+            QALog.QATextLog("Log file location: {0}", QALog.LogFileLocation);
         }
 
-        public static void QATextLog(string str, params object[] para)
+        public static string LogFileLocation
         {
-            string str2 = string.Format("[{0:yyyy-MM-dd HH:mm:ss.ffff}] ", DateTime.Now) + str;
+            get
+            {
+                return LogFile;
+            }
+        }
+
+        public static void QATextLog(string str)
+        {
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+            QATextLog(sf.GetMethod().Name, str, null);
+        }
+
+        // Logging definition start
+        public static void QATextLog(string tag, string str)
+        {
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+            QATextLog(tag + ": " + sf.GetMethod().Name, str, null);
+        }
+
+        public static void QATextLog(string method, string str, params object[] para)
+        {
+
+            string str2;
+            if (("" + method).Length > 0)
+            {
+                str2 = string.Format("[{0:yyyy-MM-dd HH:mm:ss.ffff} {1}] ", DateTime.Now, method) + str;
+            }
+            else
+            {
+                str2 = string.Format("[{0:yyyy-MM-dd HH:mm:ss.ffff}] ", DateTime.Now) + str;
+            }
             Console.WriteLine(str2, para);
             if (para != null)
             {
