@@ -48,7 +48,7 @@ namespace RSIWebSiteQA.PageObjects
 
         public string GetHQText()
         {
-            var hQText = HQText.Text;
+            var hQText = HQText.Text.Replace(System.Environment.NewLine, "|");
             return hQText;
         }
  

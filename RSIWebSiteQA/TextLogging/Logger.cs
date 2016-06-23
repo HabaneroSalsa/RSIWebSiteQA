@@ -39,7 +39,7 @@ namespace RSIWebSiteQA.TextLogging
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(1);
-            QATextLog(tag + ": " + sf.GetMethod().Name, str, null);
+            QATextLog(tag + "(" + sf.GetMethod().Name + ")", str, null);
         }
 
         public static void QATextLog(string method, string str, params object[] para)
