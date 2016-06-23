@@ -19,7 +19,7 @@ namespace RSIWebSiteQA.PageObjects
             [FindsBy(How = How.Id, Using = "mega-menu-item-6451")]
             private IWebElement WWDOverview { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6447")]
-            private IWebElement WWDAppDev { get; set; }
+            private IWebElement WWDAppDevSubMenu { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6513")]
                 private IWebElement WWDAppDevJava { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6514")]
@@ -31,7 +31,7 @@ namespace RSIWebSiteQA.PageObjects
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6517")]
                 private IWebElement WWDAppDevPHP { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6448")]
-            private IWebElement WWDAppMan { get; set; }
+            private IWebElement WWDAppManSubMenu { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6518")]
                 private IWebElement WWDAppManCAS { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6519")]
@@ -49,7 +49,7 @@ namespace RSIWebSiteQA.PageObjects
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6524")]
                 private IWebElement WWDAppManTrackWise { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6450")]
-            private IWebElement WWDQA { get; set; }
+            private IWebElement WWDQASubMenu { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6525")]
                 private IWebElement WWDQAAutomation { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6526")]
@@ -63,7 +63,7 @@ namespace RSIWebSiteQA.PageObjects
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6530")]
                 private IWebElement WWDQAValidation { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6449")]
-            private IWebElement WWDBIAnalytics { get; set; }
+            private IWebElement WWDBIAnalyticsSubMenu { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6531")]
                 private IWebElement WWDBIAnalyticsMicroStrategy { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6532")]
@@ -94,7 +94,7 @@ namespace RSIWebSiteQA.PageObjects
             [FindsBy(How = How.Id, Using = "mega-menu-item-6468")]
             private IWebElement AROverview { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6462")]
-            private IWebElement ARDevCenters { get; set; }
+            private IWebElement ARDevCentersSubMenu { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6469")]
                 private IWebElement ARDCOurLocations { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6463")]
@@ -207,13 +207,60 @@ namespace RSIWebSiteQA.PageObjects
 
         public void HoverWhatWeDo()
         {
- 
-            Actions builder = new Actions(driver);
-            Actions hoverMainMenu = builder.MoveToElement(WhatWeDoMenu);
-            hoverMainMenu.Build().Perform();
-
             //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(1000));
             //var element = wait.Until(ExpectedConditions.ElementIsVisible(SmarterOutsourcingMenu));
+            Actions builder = new Actions(driver);
+            Actions hoverMainMenu = builder.MoveToElement(WhatWeDoMenu);
+            hoverMainMenu.Build().Perform();                    
+        }
+
+        public void HoverWWDAppDevSubMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverWWDAppDevSubMenu = builder.MoveToElement(WWDAppDevSubMenu);
+            hoverWWDAppDevSubMenu.Build().Perform();
+        }
+
+        public void HoverWWDAppManSubMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverWWDAppManSubMenu = builder.MoveToElement(WWDAppManSubMenu);
+            hoverWWDAppManSubMenu.Build().Perform();
+        }
+
+        public void HoverWWDQASubMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverWWDQASubMenu = builder.MoveToElement(WWDQASubMenu);
+            hoverWWDQASubMenu.Build().Perform();
+        }
+
+        public void HoverWWDBIAnalyticsSubMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverWWDBIAnalyticsSubMenu = builder.MoveToElement(WWDBIAnalyticsSubMenu);
+            hoverWWDBIAnalyticsSubMenu.Build().Perform();
+        }
+       
+        public void HoverSmarterOutsourcingMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverSmarterOutsourcingMenu = builder.MoveToElement(SmarterOutsourcingMenu);
+            hoverSmarterOutsourcingMenu.Build().Perform();
+        }
+
+        public void HoverAboutRSIMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverAboutRSIMenu = builder.MoveToElement(AboutRSIMenu);
+            hoverAboutRSIMenu.Build().Perform();
+        }
+
+        public void HoverARDevCentersSubMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverARDevCentersSubMenu = builder.MoveToElement(ARDevCentersSubMenu);
+            hoverARDevCentersSubMenu.Build().Perform();
         }
     }
 }
