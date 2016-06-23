@@ -24,8 +24,6 @@ namespace RSIWebSiteQA.PageObjects
                 private IWebElement WWDAppDevJava { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6514")]
                 private IWebElement WWDAppDevDotNET { get; set; }
-                [FindsBy(How = How.Id, Using = "mega-menu-item-6514")]
-                private IWebElement WWDAppDevDotNET { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6515")]
                 private IWebElement WWDAppDevMobile { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6516")]
