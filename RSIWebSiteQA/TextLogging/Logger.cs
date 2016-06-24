@@ -16,7 +16,7 @@ namespace RSIWebSiteQA.TextLogging
 
         static QALog()
         {
-            QALog.QATextLog("Log file location: {0}", QALog.LogFileLocation);
+            QALog.QATextLog("Log file location: ", QALog.LogFileLocation);
         }
 
         public static string LogFileLocation

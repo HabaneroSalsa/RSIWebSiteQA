@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RSIWebSiteQA.PageObjects
@@ -211,7 +212,10 @@ namespace RSIWebSiteQA.PageObjects
             //var element = wait.Until(ExpectedConditions.ElementIsVisible(SmarterOutsourcingMenu));
             Actions builder = new Actions(driver);
             Actions hoverMainMenu = builder.MoveToElement(WhatWeDoMenu);
-            hoverMainMenu.Build().Perform();                    
+            hoverMainMenu.Build().Perform();
+            Thread.Sleep(600);
+            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(1000));
+            //var element = wait.Until(ExpectedConditions.ElementIsVisible(WWDBIAnalyticsSubMenu));    
         }
 
         public void HoverWWDAppDevSubMenu()
@@ -219,6 +223,7 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDAppDevSubMenu = builder.MoveToElement(WWDAppDevSubMenu);
             hoverWWDAppDevSubMenu.Build().Perform();
+            Thread.Sleep(600);
         }
 
         public void HoverWWDAppManSubMenu()
@@ -226,6 +231,7 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDAppManSubMenu = builder.MoveToElement(WWDAppManSubMenu);
             hoverWWDAppManSubMenu.Build().Perform();
+            Thread.Sleep(600);
         }
 
         public void HoverWWDQASubMenu()
@@ -233,6 +239,7 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDQASubMenu = builder.MoveToElement(WWDQASubMenu);
             hoverWWDQASubMenu.Build().Perform();
+            Thread.Sleep(600);
         }
 
         public void HoverWWDBIAnalyticsSubMenu()
@@ -240,6 +247,7 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDBIAnalyticsSubMenu = builder.MoveToElement(WWDBIAnalyticsSubMenu);
             hoverWWDBIAnalyticsSubMenu.Build().Perform();
+            Thread.Sleep(600);
         }
        
         public void HoverSmarterOutsourcingMenu()
@@ -261,6 +269,126 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverARDevCentersSubMenu = builder.MoveToElement(ARDevCentersSubMenu);
             hoverARDevCentersSubMenu.Build().Perform();
+        }
+
+        public void ClickWWDAppDevJava()
+        {
+            WWDAppDevJava.Click();
+        }
+
+        public void ClickWWDAppDevDotNET()
+        {
+            WWDAppDevDotNET.Click();
+        }
+
+        public void ClickWWDAppDevMobile()
+        {
+            WWDAppDevMobile.Click();
+        }
+
+        public void ClickWWDAppDevWeb()
+        {
+            WWDAppDevWeb.Click();
+        }
+
+        public void ClickWWDAppDevPHP()
+        {
+            WWDAppDevPHP.Click();
+        }
+
+        public void ClickWWDAppManCAS()
+        {
+            WWDAppManCAS.Click();
+        }
+
+        public void ClickWWDAppManSAP()
+        {
+            WWDAppManSAP.Click();
+        }
+
+        public void ClickWWDAppManOracle()
+        {
+            WWDAppManOracle.Click();
+        }
+
+        public void ClickWWDAppManLIMS()
+        {
+            WWDAppManLIMS.Click();
+        }
+
+        public void ClickWWDAppManDatabase()
+        {
+            WWDAppManDatabase.Click();
+        }
+
+        public void ClickWWDAppManSalesforce()
+        {
+            WWDAppManSalesforce.Click();
+        }
+
+        public void ClickWWDAppManSharepoint()
+        {
+            WWDAppManSharepoint.Click();
+        }
+
+        public void ClickWWDAppManTrackWise()
+        {
+            WWDAppManTrackWise.Click();
+        }
+
+        public void ClickWWDQAAutomation()
+        {
+            WWDQAAutomation.Click();
+        }
+
+        public void ClickWWDQAStrategy()
+        {
+            WWDQAStrategy.Click();
+        }
+
+        public void ClickWWDQASWTesting()
+        {
+            WWDQASWTesting.Click();
+        }
+
+        public void ClickWWDQASWPerfTest()
+        {
+            WWDQASWPerfTest.Click();
+        }
+
+        public void ClickWWDQAMobileTest()
+        {
+            WWDQAMobileTest.Click();
+        }
+
+        public void ClickWWDQAValidation()
+        {
+            WWDQAValidation.Click();
+        }
+
+        public void ClickWWDBIAnalyticsMicroStrategy()
+        {
+            WWDBIAnalyticsMicroStrategy.Click();
+        }
+
+        public void ClickWWDBIAnalyticsInformatica()
+        {
+            WWDBIAnalyticsInformatica.Click();
+        }
+
+        public void ClickWWDBIAnalyticsSAPHANA()
+        {
+            WWDBIAnalyticsSAPHANA.Click();
+        }
+
+        public void ClickWWDBIAnalyticsMSBI()
+        {
+            WWDBIAnalyticsMSBI.Click();
+        }
+
+        public void ClickWWDBIAnalyticsReporting()
+        {
+            WWDBIAnalyticsReporting.Click();
         }
     }
 }
