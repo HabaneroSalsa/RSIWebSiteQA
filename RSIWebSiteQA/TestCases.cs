@@ -5,6 +5,7 @@ using OpenQA.Selenium.Interactions; //  var act = new Actions(driver);  AWESOME
 using OpenQA.Selenium.Support.UI;
 using RelevantCodes.ExtentReports;
 using RSIWebSiteQA.PageObjects;
+using RSIWebSiteQA.PageObjects._0_WhatWeDo;
 using RSIWebSiteQA.TextLogging;
 using System;
 using System.Collections.Generic;
@@ -537,6 +538,17 @@ namespace RSIWebSiteQA
             driver.Navigate().Back();
             driver.Close();
             QALog.QATextLog("CareersMenuTest complete"); 
+        }
+
+        [Test]
+        public void WhatWeDoOverviewPageTest()
+        {
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--start-maximized");
+            IWebDriver driver = new ChromeDriver(options);
+            driver.Url = ConfigurationManager.AppSettings["URL"];
+            var mainMenu = new MainMenu(driver);
+            var overviewPage = new OverviewPage(driver);
         }
     }
 }
