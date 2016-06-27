@@ -108,7 +108,7 @@ namespace RSIWebSiteQA.PageObjects
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6472")]
                 private IWebElement ARDCNewMexico { get; set; }
                 [FindsBy(How = How.Id, Using = "mega-menu-item-6484")]
-                private IWebElement ARDCWhereNext { get; set; }
+                private IWebElement ARDCWheresNext { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6461")]
             private IWebElement ARCommunity { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6467")]
@@ -118,7 +118,7 @@ namespace RSIWebSiteQA.PageObjects
             [FindsBy(How = How.Id, Using = "mega-menu-item-6460")]
             private IWebElement ARBoardOfDirectors { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6470")]
-            private IWebElement ARPressreleases { get; set; }
+            private IWebElement ARPressReleases { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6471")]
             private IWebElement ARNews { get; set; }
             [FindsBy(How = How.Id, Using = "mega-menu-item-6459")]
@@ -256,6 +256,7 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverSmarterOutsourcingMenu = builder.MoveToElement(SmarterOutsourcingMenu);
             hoverSmarterOutsourcingMenu.Build().Perform();
+            Thread.Sleep(600);
         }
 
         public void HoverAboutRSIMenu()
@@ -263,6 +264,7 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverAboutRSIMenu = builder.MoveToElement(AboutRSIMenu);
             hoverAboutRSIMenu.Build().Perform();
+            Thread.Sleep(600);
         }
 
         public void HoverARDevCentersSubMenu()
@@ -270,6 +272,20 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverARDevCentersSubMenu = builder.MoveToElement(ARDevCentersSubMenu);
             hoverARDevCentersSubMenu.Build().Perform();
+            Thread.Sleep(600);
+        }
+
+        public void HoverCareersMenu()
+        {
+            Actions builder = new Actions(driver);
+            Actions hoverCareersMenu = builder.MoveToElement(CareersMenu);
+            hoverCareersMenu.Build().Perform();
+            Thread.Sleep(600);
+        }
+
+        public void ClickWWDOverview()
+        {
+            WWDOverview.Click();
         }
 
         public void ClickWWDAppDevJava()
@@ -578,6 +594,338 @@ namespace RSIWebSiteQA.PageObjects
             HoverWhatWeDo();
             HoverWWDBIAnalyticsSubMenu();
             ClickWWDBIAnalyticsReporting();
+        }
+
+        public void TestWWDOverview()
+        {
+            HoverWhatWeDo();
+            WWDOverview.Click();
+        }
+
+        public void TestWWDAppDevSubMenu()
+        {
+            HoverWhatWeDo();
+            ClickWWDAppDevSubMenu();
+        }
+
+        public void TestWWDAppManSubMenu()
+        {
+            HoverWhatWeDo();
+            ClickWWDAppManSubMenu();
+        }
+
+        public void TestWWDQASubMenu()
+        {
+            HoverWhatWeDo();
+            ClickWWDQASubMenu();
+        }
+
+        public void TestWWDBIAnalyticsSubMenu()
+        {
+            HoverWhatWeDo();
+            ClickWWDBIAnalyticsSubMenu();
+        }
+
+        public void ClickSOOverview()
+        {
+            SOOverview.Click();
+        }
+
+        public void ClickSOBenefits()
+        {
+            SOBenefits.Click();
+        }
+
+        public void ClickSOWhattoExpect()
+        {
+            SOWhattoExpect.Click();
+        }
+
+        public void ClickSOFAQ()
+        {
+            SOFAQ.Click();
+        }
+
+        public void TestSOOverview()
+        {
+            HoverSmarterOutsourcingMenu();
+            ClickSOOverview();
+        }
+
+        public void TestSOBenefits()
+        {
+            HoverSmarterOutsourcingMenu();
+            ClickSOBenefits();
+        }
+
+        public void TestSOWhattoExpect()
+        {
+            HoverSmarterOutsourcingMenu();
+            ClickSOWhattoExpect();
+        }
+        public void TestSOFAQ()
+        {
+            HoverSmarterOutsourcingMenu();
+            ClickSOFAQ();
+        }
+
+        public void ClickAROverview()
+        {
+            AROverview.Click();
+        }
+
+        public void ClickARDevCentersSubMenu()
+        {
+            ARDevCentersSubMenu.Click();
+        }
+
+        public void ClickARCommunity()
+        {
+            ARCommunity.Click();
+        }
+
+        public void ClickAROurPartners()
+        {
+            AROurPartners.Click();
+        }
+
+        public void ClickAROurLeadership()
+        {
+            AROurLeadership.Click();
+        }
+
+        public void ClickARBoardOfDirectors()
+        { 
+            ARBoardOfDirectors.Click();
+        }
+
+        public void ClickARPressReleases()
+        {
+            ARPressReleases.Click();
+        }
+
+        public void ClickARNews()
+        {
+            ARNews.Click();
+        }
+
+        public void ClickARAwards()
+        {
+            ARAwards.Click();
+        }
+
+        public void ClickARDCOurLocations()
+        { 
+            ARDCOurLocations.Click();
+        }
+
+        public void ClickARDCAlabama()
+        {
+            ARDCAlabama.Click();
+        }
+
+        public void ClickARDCArkansas()
+        {
+            ARDCArkansas.Click();
+        }
+
+        public void ClickARDCGeorgia()
+        {
+            ARDCGeorgia.Click();
+        }
+
+        public void ClickARDCNewMexico()
+        {
+            ARDCNewMexico.Click();
+        }
+
+        public void ClickARDCWheresNext()
+        {
+            ARDCWheresNext.Click();
+        }
+
+        public void TestAROverview()
+        {
+            HoverAboutRSIMenu();
+            ClickAROverview();
+        }
+
+        public void TestARDevCenters()
+        {
+            HoverAboutRSIMenu();
+            ClickARDevCentersSubMenu();
+        }
+
+        public void TestARCommunity()
+        {
+            HoverAboutRSIMenu();
+            ClickARCommunity();
+        }
+
+        public void TestAROurPartners()
+        { 
+            HoverAboutRSIMenu();
+            ClickAROurPartners();
+        }
+
+        public void TestAROurLeadership()
+        {
+            HoverAboutRSIMenu();
+            ClickAROurLeadership();
+        }
+
+        public void TestARBoardOfDirectors()
+        {
+            HoverAboutRSIMenu();
+            ClickARBoardOfDirectors();
+        }
+
+        public void TestARPressReleases()
+        {
+            HoverAboutRSIMenu();
+            ClickARPressReleases();
+        }
+
+        public void TestARNews()
+        {
+            HoverAboutRSIMenu();
+            ClickARNews();
+        }
+
+        public void TestARAwards()
+        {
+            HoverAboutRSIMenu();
+            ClickARAwards();
+        }
+
+        public void TestARDCOurLocations()
+        {
+            HoverAboutRSIMenu();
+            HoverARDevCentersSubMenu();
+            ClickARDCOurLocations();
+        }
+
+        public void TestARDCAlabama()
+        {
+            HoverAboutRSIMenu();
+            HoverARDevCentersSubMenu();
+            ClickARDCAlabama();
+        }
+
+        public void TestARDCArkansas()
+        {
+            HoverAboutRSIMenu();
+            HoverARDevCentersSubMenu();
+            ClickARDCArkansas();
+        }
+
+        public void TestARDCGeorgia()
+        {
+            HoverAboutRSIMenu();
+            HoverARDevCentersSubMenu();
+            ClickARDCGeorgia();
+        }
+
+        public void TestARDCNewMexico()
+        {
+            HoverAboutRSIMenu();
+            HoverARDevCentersSubMenu();
+            ClickARDCNewMexico();          
+        }
+
+        public void TestARDCWheresNext()
+        {
+            HoverAboutRSIMenu();
+            HoverARDevCentersSubMenu();
+            ClickARDCWheresNext();
+        }
+
+        public void ClickCMOverview()
+        {
+            CMOverview.Click();
+        }
+
+        public void ClickCMJobSearch()
+        {
+            CMJobSearch.Click();
+        }
+
+        public void ClickCMApplication()
+        {
+            CMApplication.Click();
+        }
+
+        public void ClickCMYourBenefits()
+        {
+            CMYourBenefits.Click();
+        }
+
+        public void ClickCMTraining()
+        {
+            CMTraining.Click();
+        }
+
+        public void ClickCMUniPartner()
+        {
+            CMUniPartner.Click();
+        }
+
+        public void ClickCMRSICulture()
+        {
+            CMRSICulture.Click();
+        }
+
+        public void ClickCMCareerEvents()
+        {
+            CMcareerEvents.Click();
+        }
+
+        public void TestCareersMenuOverview()
+        {
+            HoverCareersMenu();
+            ClickCMOverview();
+        }
+
+        public void TestCareersMenuJobSearch()
+        {
+            HoverCareersMenu();
+            ClickCMJobSearch();
+        }
+
+        public void TestCareersMenuApplication()
+        {
+            HoverCareersMenu();
+            ClickCMApplication();
+        }
+
+        public void TestCareersMenuYourBenefits()
+        {
+            HoverCareersMenu();
+            ClickCMYourBenefits();
+        }
+
+        public void TestCareersMenuTraining()
+        {
+            HoverCareersMenu();
+            ClickCMTraining();
+        }
+
+        public void TestCareersMenuUniPartner()
+        {
+            HoverCareersMenu();
+            ClickCMUniPartner();
+        }
+
+        public void TestCareersMenuRSICulture()
+        {
+            HoverCareersMenu();
+            ClickCMRSICulture();
+        }
+
+        public void TestCareersMenuCareerEvents()
+        {
+            HoverCareersMenu();
+            ClickCMCareerEvents();
         }
     }
 }
