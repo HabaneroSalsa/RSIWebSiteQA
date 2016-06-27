@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace RSIWebSiteQA.PageObjects
 {
     class MainMenu
@@ -389,6 +390,194 @@ namespace RSIWebSiteQA.PageObjects
         public void ClickWWDBIAnalyticsReporting()
         {
             WWDBIAnalyticsReporting.Click();
+        }
+
+        public void ClickWWDAppDevSubMenu()
+        {
+            WWDAppDevSubMenu.Click();
+        }
+
+        public void ClickWWDAppManSubMenu()
+        {
+            WWDAppManSubMenu.Click();
+        }
+
+        public void ClickWWDQASubMenu()
+        {
+            WWDQASubMenu.Click();
+        }
+
+        public void ClickWWDBIAnalyticsSubMenu()
+        {
+            WWDBIAnalyticsSubMenu.Click();
+        }
+
+        public void TestWWDAppDevJava()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppDevSubMenu();
+            ClickWWDAppDevJava();
+        }
+
+        public void TestWWDAppDevDotNET()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppDevSubMenu();
+            ClickWWDAppDevDotNET();
+        }
+
+        public void TestWWDAppDevMobile()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppDevSubMenu();
+            ClickWWDAppDevMobile();
+        }
+
+        public void TestWWDAppDevWeb()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppDevSubMenu();
+            ClickWWDAppDevWeb();
+        }
+
+        public void TestWWDAppDevPHP()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppDevSubMenu();
+            ClickWWDAppDevPHP();
+        }
+
+        public void TestWWDAppManCAS()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManCAS();
+        }
+
+        public void TestWWDAppManSAP()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManSAP();
+        }
+
+        public void TestWWDAppManOracle()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManOracle();
+        }
+
+        public void TestWWDAppManLIMS()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManLIMS();
+        }
+
+        public void TestWWDAppManDatabase()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManDatabase();
+        }
+
+        public void TestWWDAppManSalesforce()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManSalesforce();
+        }
+
+        public void TestWWDAppManSharepoint()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManSharepoint();
+        }
+
+        public void TestWWDAppManTrackWise()
+        {
+            HoverWhatWeDo();
+            HoverWWDAppManSubMenu();
+            ClickWWDAppManTrackWise();
+        }
+
+        public void TestWWDQAAutomation()
+        {
+            HoverWhatWeDo();
+            HoverWWDQASubMenu();
+            ClickWWDQAAutomation();
+        }
+
+        public void TestWWDQAStrategy()
+        {
+            HoverWhatWeDo();
+            HoverWWDQASubMenu();
+            ClickWWDQAStrategy();
+        }
+
+        public void TestWWDQASWTesting()
+        {
+            HoverWhatWeDo();
+            HoverWWDQASubMenu();
+            ClickWWDQASWTesting();
+        }
+
+        public void TestWWDQASWPerfTest()
+        {
+            HoverWhatWeDo();
+            HoverWWDQASubMenu();
+            ClickWWDQASWPerfTest();
+        }
+
+        public void TestWWDQAMobileTest()
+        {
+            HoverWhatWeDo();
+            HoverWWDQASubMenu();
+            ClickWWDQAMobileTest();
+        }
+
+        public void TestWWDQAValidation()
+        {
+            HoverWhatWeDo();
+            HoverWWDQASubMenu();
+            ClickWWDQAValidation();
+        }
+
+        public void TestWWDBIAnalyticsMicroStrategy()
+        {
+            HoverWhatWeDo();
+            HoverWWDBIAnalyticsSubMenu();
+            ClickWWDBIAnalyticsMicroStrategy();
+        }
+
+        public void TestWWDBIAnalyticsInformatica()
+        {
+            HoverWhatWeDo();
+            HoverWWDBIAnalyticsSubMenu();
+            ClickWWDBIAnalyticsInformatica();
+        }
+
+        public void TestWWDBIAnalyticsSAPHANA()
+        {
+            HoverWhatWeDo();
+            HoverWWDBIAnalyticsSubMenu();
+            ClickWWDBIAnalyticsSAPHANA();
+        }
+
+        public void TestWWDBIAnalyticsMSBI()
+        {
+            HoverWhatWeDo();
+            HoverWWDBIAnalyticsSubMenu();
+            ClickWWDBIAnalyticsMSBI();
+        }
+
+        public void TestWWDBIAnalyticsReporting()
+        {
+            HoverWhatWeDo();
+            HoverWWDBIAnalyticsSubMenu();
+            ClickWWDBIAnalyticsReporting();
         }
     }
 }
