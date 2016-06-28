@@ -1,20 +1,20 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions; //  var act = new Actions(driver);  AWESOME
-using OpenQA.Selenium.Support.UI;
-using RelevantCodes.ExtentReports;
-using RSIWebSiteQA.PageObjects;
-using RSIWebSiteQA.PageObjects._0_WhatWeDo;
-using RSIWebSiteQA.TextLogging;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿    using NUnit.Framework;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
+    using OpenQA.Selenium.Interactions; //  var act = new Actions(driver);  AWESOME
+    using OpenQA.Selenium.Support.UI;
+    using RelevantCodes.ExtentReports;
+    using RSIWebSiteQA.PageObjects;
+    using RSIWebSiteQA.PageObjects._0_WhatWeDo;
+    using RSIWebSiteQA.TextLogging;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    
 // Test Scope
 // Connect to site
 // Validate Header ✓
@@ -89,17 +89,30 @@ using System.Threading.Tasks;
 // Validate Contact page
 // Validate Apply Now page
 
-
 namespace RSIWebSiteQA
 {
-    class TestCases
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+    [TestFixture]  
+    public class TestCases
     {
-        [Test]
-        public void PageHeaderTest()
+            
+        private IWebDriver driver;
+
+        public TestCases() { }
+
+        [OneTimeSetUp]
+        public void TestInit()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
+            driver = new ChromeDriver(options);
+
+        }
+
+        [Test]
+        public void PageHeaderTest()
+        {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var pageHeader = new PageHeader(driver);
             // LinkedIn link
@@ -148,16 +161,13 @@ namespace RSIWebSiteQA
             // Validate RSI page success 
             Assert.AreEqual("http://www.ruralsourcing.com/", driver.Url);
             QALog.QATextLog("ClickRSIHeaderLogo loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("PageHeaderTest complete");
         }
 
         [Test]
         public void PageFooterTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var pageFooter = new PageFooter(driver);
             bool footerLogoDisplayed = pageFooter.RSIFooterLogodisplayed();
@@ -172,16 +182,13 @@ namespace RSIWebSiteQA
             string hQText = pageFooter.GetHQText();
             Assert.AreEqual("Headquarters|Rural Sourcing Inc.|817 West Peachtree St.|Suite 550|Atlanta, GA 30308|(877) 887-4774", hQText);
             QALog.QATextLog(this.GetType().ToString(), "hQTest is " + hQText);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("PageFooterTest complete");
         }
 
         [Test]
         public void MainMenuStripTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.ClickWhatWeDoMenu();
@@ -211,16 +218,13 @@ namespace RSIWebSiteQA
             mainMenu.ClickApplyNowMenu();
             Assert.AreEqual("http://www.ruralsourcing.com/careers/job-search/", driver.Url);
             QALog.QATextLog("ClickApplyNowMenu loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("MainMenuStripTest complete");
         }
 
         [Test]
         public void WhatWeDoAppDevSubMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDAppDevJava();
@@ -242,16 +246,13 @@ namespace RSIWebSiteQA
             mainMenu.TestWWDAppDevPHP();
             Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/#php", driver.Url);
             QALog.QATextLog("ClickWWDAppDevPHP loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("WhatWeDoAppDevSubMenuTest complete");
         }
 
         [Test]
         public void WhatWeDoAppManSubMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDAppManCAS();
@@ -285,16 +286,13 @@ namespace RSIWebSiteQA
             mainMenu.TestWWDAppManTrackWise();
             Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#trackwise", driver.Url);
             QALog.QATextLog("ClickWWDAppManSharepoint loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("WhatWeDoAppManSubMenuTest complete");
         }
-        
+
         [Test]
         public void WhatWeDoQASubMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDQAAutomation();
@@ -320,16 +318,13 @@ namespace RSIWebSiteQA
             mainMenu.TestWWDQAValidation();
             Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#validation", driver.Url);
             QALog.QATextLog("ClickWWDQAValidation loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("WhatWeDoQASubMenuTest complete");
         }
 
         [Test]
         public void WhatWeDoBIAnalyticsSubMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDBIAnalyticsMicroStrategy();
@@ -351,16 +346,13 @@ namespace RSIWebSiteQA
             mainMenu.TestWWDBIAnalyticsReporting();
             Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#reporting", driver.Url);
             QALog.QATextLog("ClickWWDBIAnalyticsReporting loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("WhatWeDoBIAnalyticsSubMenuTest complete");
         }
 
         [Test]
         public void WhatWeDoMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDOverview();
@@ -383,16 +375,13 @@ namespace RSIWebSiteQA
             Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/", driver.Url);
             QALog.QATextLog("ClickWWDBIAnalyticsSubMenu loaded " + driver.Url);
             driver.Navigate().Back();
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("WhatWeDoMenuTest complete");
         }
 
         [Test]
         public void SmarterOutsourcingMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestSOOverview();
@@ -410,16 +399,13 @@ namespace RSIWebSiteQA
             mainMenu.TestSOFAQ();
             Assert.AreEqual("http://www.ruralsourcing.com/smarter-outsourcing/frequently-asked-questions/", driver.Url);
             QALog.QATextLog("ClickSOFAQ loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("SmarterOutsourcingMenuTest complete");
         }
 
         [Test]
         public void AboutRSIMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestAROverview();
@@ -457,16 +443,13 @@ namespace RSIWebSiteQA
             mainMenu.TestARAwards();
             Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/awards/", driver.Url);
             QALog.QATextLog("ClickARAwards loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("AboutRSIMenuTest complete");          
         }
 
         [Test]
         public void AboutRSIDevCentersSubMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestARDCOurLocations();
@@ -492,16 +475,13 @@ namespace RSIWebSiteQA
             mainMenu.TestARDCWheresNext();
             Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/wheres-next/", driver.Url);
             QALog.QATextLog("ClickARDCWheresNext loaded " + driver.Url);
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("AboutRSIDevCentersSubMenuTest complete");   
         }
 
         [Test]
         public void CareersMenuTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestCareersMenuOverview();
@@ -536,16 +516,13 @@ namespace RSIWebSiteQA
             Assert.AreEqual("http://www.ruralsourcing.com/career-events/", driver.Url);
             QALog.QATextLog("ClickCMCareerEvents loaded " + driver.Url);
             driver.Navigate().Back();
-            driver.Close();
+            //driver.Close();  Do not close primary session
             QALog.QATextLog("CareersMenuTest complete"); 
         }
 
         [Test]
         public void WhatWeDoOverviewPageTest()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            IWebDriver driver = new ChromeDriver(options);
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             var overviewPage = new OverviewPage(driver);
