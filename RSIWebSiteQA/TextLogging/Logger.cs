@@ -14,10 +14,17 @@ namespace RSIWebSiteQA.TextLogging
         static System.Collections.Specialized.NameValueCollection appSettings = ConfigurationManager.AppSettings;
         static string LogFile = System.IO.Path.Combine(appSettings["LogDirectory"] == null ? Environment.CurrentDirectory : appSettings["LogDirectory"],
            appSettings["LogPrefix"] == null ? "NUnitTest" : appSettings["LogPrefix"] + string.Format("_{0:yyyyMMddHHmmss}.log", DateTime.Now));
-
         static QALog()
         {
             QALog.QATextLog("Log file location: ", QALog.LogFileLocation);
+        }
+
+        public static string ReportFileLocation
+        {
+            get
+            {
+                return LogFile + ".html";
+            }
         }
 
         public static string LogFileLocation
@@ -31,7 +38,7 @@ namespace RSIWebSiteQA.TextLogging
         public static void QATextLog(string str)
         {
             StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
+            StackFrame sf = st.GetFrame(2);
             QATextLog(sf.GetMethod().Name, str, null);
         }
 
@@ -39,7 +46,7 @@ namespace RSIWebSiteQA.TextLogging
         public static void QATextLog(string tag, string str)
         {
             StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
+            StackFrame sf = st.GetFrame(2);
             QATextLog(tag + "(" + sf.GetMethod().Name + ")", str, null);
         }
 

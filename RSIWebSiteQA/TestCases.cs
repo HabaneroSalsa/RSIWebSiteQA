@@ -7,6 +7,7 @@
     using RSIWebSiteQA.PageObjects;
     using RSIWebSiteQA.PageObjects._0_WhatWeDo;
     using RSIWebSiteQA.TextLogging;
+    using RSIWebSiteQA.Reporting;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -91,441 +92,368 @@
 
 namespace RSIWebSiteQA
 {
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
     [TestFixture]  
     public class TestCases
-    {
-            
+    {            
         private IWebDriver driver;
 
         public TestCases() { }
 
         [OneTimeSetUp]
-        public void TestInit()
+        public void TestSetUp()
         {
+            QALog.QATextLog("Test Suite started");
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
             driver = new ChromeDriver(options);
+            string HTMLLogFile = QALog.ReportFileLocation;
+            var extent = new ExtentReports(HTMLLogFile, false, DisplayOrder.NewestFirst);
+            extent.AddSystemInfo("Selenium Version", "2.53.0")
+                  .AddSystemInfo("NUnit Version", "3.2.0")
+                  .AddSystemInfo("Dapper Version", "1.4.2")
+                  .AddSystemInfo("Environment", "Local")
+                  .AddSystemInfo("Browser", "Chrome");
+            var testSuite = extent.StartTest("RSIWebSiteQA <b>" + string.Format("[{0:yyyy-MM-dd HH:mm:ss.ffff}] ", DateTime.Now) +
+                "Suite Objective:</b><br/>Validate all menu links.<br/>Validate all page loads.<br/>Validate all page controls and content.");
+            testSuite.AssignCategory("Functional", "Regression", "Training")
+                     .AssignAuthor("Rick Johnson")
+                     .Log(LogStatus.Info, "Log file location:<br/>" + HTMLLogFile);
+            
+
 
         }
 
-        [Test]
+        [OneTimeTearDown]
+        public void TestTearDown()
+        {
+            driver.Close();
+            QALog.QATextLog("Test Suite finished");
+            // Finish off report with extent.Flush
+            
+            //extent.EndTest(testSuite); 
+            //extent.Flush();
+            //extent.Close();
+        }
+
+        [Test, Order(100)]
         public void PageHeaderTest()
         {
+            //var casePageHeaderTest = extent.StartTest("Page Header Test");
             driver.Url = ConfigurationManager.AppSettings["URL"];
-            var pageHeader = new PageHeader(driver);
-            // LinkedIn link
+            var pageHeader = new PageHeader(driver);         
             pageHeader.ClickLinkedInHeader();
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            // Validate Linkedin Page Success
-            Assert.AreEqual("https://www.linkedin.com/company/rural-sourcing-inc-", driver.Url);
-            QALog.QATextLog("ClickLinkedInHeader loaded " + driver.Url);
-            driver.Close(); // Close new tab
+            LogReportAssert.Commit("https://www.linkedin.com/company/rural-sourcing-inc-", driver.Url, "ClickLinkedInHeader loaded ", "ReportText");
+            driver.Close();
             driver.SwitchTo().Window(driver.WindowHandles.First());
-            // Twitter link
             pageHeader.ClickTwitterHeader();
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            // Validate Twitter page success 
-            Assert.AreEqual("https://twitter.com/RuralSourcing", driver.Url);
-            QALog.QATextLog("ClickTwitterHeader loaded " + driver.Url);
+            LogReportAssert.Commit("https://twitter.com/RuralSourcing", driver.Url, "ClickTwitterHeader loaded ", "ReportText");
             driver.Close();
             driver.SwitchTo().Window(driver.WindowHandles.First());
-            // Facebook link
             pageHeader.ClickFacebookHeader();
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            // Validate Facebook page success 
-            Assert.AreEqual("https://www.facebook.com/RuralSourcing", driver.Url);
-            QALog.QATextLog("ClickFacebookHeader loaded " + driver.Url);
+            LogReportAssert.Commit("https://www.facebook.com/RuralSourcing", driver.Url, "ClickFacebookHeader loaded ", "ReportText");
             driver.Close();
             driver.SwitchTo().Window(driver.WindowHandles.First());
-            // Youtube link
             pageHeader.ClickYouTubeHeader();
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            // Validate YouTube page success 
-            Assert.AreEqual("https://www.youtube.com/channel/UC2Na3fMBAKpuBN50d641oag", driver.Url);
-            QALog.QATextLog("ClickYouTubeHeader loaded " + driver.Url);
+            LogReportAssert.Commit("https://www.youtube.com/channel/UC2Na3fMBAKpuBN50d641oag", driver.Url, "ClickYouTubeHeader loaded ", "ReportText");
             driver.Close();
             driver.SwitchTo().Window(driver.WindowHandles.First());
-            // RSS link
             pageHeader.ClickRSSHeader();
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            // Validate RSS page success 
-            Assert.AreEqual("http://www.ruralsourcing.com/rsi-rss-feed", driver.Url);
-            QALog.QATextLog("ClickRSSHeader loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/rsi-rss-feed", driver.Url, "ClickRSSHeader loaded ", "ReportText");
             driver.Close();
             driver.SwitchTo().Window(driver.WindowHandles.First());
-            // RSI image link
             pageHeader.ClickRSIHeaderLogo();
             driver.SwitchTo().Window(driver.WindowHandles.Last());
-            // Validate RSI page success 
-            Assert.AreEqual("http://www.ruralsourcing.com/", driver.Url);
-            QALog.QATextLog("ClickRSIHeaderLogo loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/", driver.Url, "ClickRSIHeaderLogo loaded ", "ReportText");
             QALog.QATextLog("PageHeaderTest complete");
         }
 
-        [Test]
+        [Test, Order(100)]
         public void PageFooterTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var pageFooter = new PageFooter(driver);
             bool footerLogoDisplayed = pageFooter.RSIFooterLogodisplayed();
-            Assert.AreEqual(true, footerLogoDisplayed);
-            QALog.QATextLog(this.GetType().ToString(),"footerLogoDisplayed is " + footerLogoDisplayed);
+            LogReportAssert.Commit("True", footerLogoDisplayed.ToString(), "footerLogoDisplayed is ", "ReportText");
             string footerImageSize = pageFooter.GetFooterLogoSize();
-            Assert.AreEqual("182 x 72", footerImageSize);
-            QALog.QATextLog(this.GetType().ToString(), "footerImageSize is " + footerImageSize);
+            LogReportAssert.Commit("182 x 72", footerImageSize, "footerImageSize is ", "ReportText");
             string footerText = pageFooter.GetFooterText();
-            Assert.AreEqual("Copyright 2016 Rural Sourcing Inc., All rights reserved.", footerText);
-            QALog.QATextLog(this.GetType().ToString(), "footerText is " + footerText);
+            LogReportAssert.Commit("Copyright 2016 Rural Sourcing Inc., All rights reserved.", footerText, "footerText is ", "ReportText");
             string hQText = pageFooter.GetHQText();
-            Assert.AreEqual("Headquarters|Rural Sourcing Inc.|817 West Peachtree St.|Suite 550|Atlanta, GA 30308|(877) 887-4774", hQText);
-            QALog.QATextLog(this.GetType().ToString(), "hQTest is " + hQText);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("Headquarters|Rural Sourcing Inc.|817 West Peachtree St.|Suite 550|Atlanta, GA 30308|(877) 887-4774", hQText, "hQTest is ", "ReportText");
             QALog.QATextLog("PageFooterTest complete");
         }
 
-        [Test]
+        [Test, Order(101)]
         public void MainMenuStripTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.ClickWhatWeDoMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/", driver.Url);
-            QALog.QATextLog("ClickWhatWeDoMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/", driver.Url, "ClickWhatWeDoMenu loaded ", "ReportText");
             mainMenu.ClickSmarterOutsourcingMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/smarter-outsourcing/", driver.Url);
-            QALog.QATextLog("ClickSmarterOutsourcingMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/smarter-outsourcing/", driver.Url, "ClickSmarterOutsourcingMenu loaded ", "ReportText");
             mainMenu.ClickResultsMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/results/", driver.Url);
-            QALog.QATextLog("ClickResultsMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/results/", driver.Url, "ClickResultsMenu loaded ", "ReportText");
             mainMenu.ClickAboutRSIMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/", driver.Url);
-            QALog.QATextLog("ClickAboutRSIMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/", driver.Url, "ClickAboutRSIMenu loaded ", "ReportText");
             mainMenu.ClickBlogMenu();
-            Assert.AreEqual("http://blog.ruralsourcing.com/", driver.Url);
-            QALog.QATextLog("ClickBlogMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://blog.ruralsourcing.com/", driver.Url, "ClickBlogMenu loaded ", "ReportText");
             mainMenu.ClickCareersMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/", driver.Url);
-            QALog.QATextLog("ClickCareersMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/", driver.Url, "ClickCareersMenu loaded ", "ReportText");
             mainMenu.ClickAppMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/app/", driver.Url);
-            QALog.QATextLog("ClickAppMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/app/", driver.Url, "ClickAppMenu loaded ", "ReportText");
             mainMenu.ClickContactMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/contact/", driver.Url);
-            QALog.QATextLog("ClickContactMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/contact/", driver.Url, "ClickContactMenu loaded ", "ReportText");
             mainMenu.ClickApplyNowMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/job-search/", driver.Url);
-            QALog.QATextLog("ClickApplyNowMenu loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/job-search/", driver.Url, "ClickApplyNowMenu loaded ", "ReportText");
             QALog.QATextLog("MainMenuStripTest complete");
         }
 
-        [Test]
+        [Test, Order(103)]
         public void WhatWeDoAppDevSubMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDAppDevJava();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/#java", driver.Url);
-            QALog.QATextLog("ClickWWDAppDevJava loaded " + driver.Url); 
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-development/#java", driver.Url, "ClickWWDAppDevJava loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppDevDotNET();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/#net", driver.Url);
-            QALog.QATextLog("ClickWWDAppDevDotNET loaded " + driver.Url); 
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-development/#net", driver.Url, "ClickWWDAppDevDotNET loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppDevMobile();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/#mobile", driver.Url);
-            QALog.QATextLog("ClickWWDAppDevMobile loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-development/#mobile", driver.Url, "ClickWWDAppDevMobile loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppDevWeb();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/#web", driver.Url);
-            QALog.QATextLog("ClickWWDAppDevWeb loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-development/#web", driver.Url, "ClickWWDAppDevWeb loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppDevPHP();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/#php", driver.Url);
-            QALog.QATextLog("ClickWWDAppDevPHP loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-development/#php", driver.Url, "ClickBClickWWDAppDevPHPlogMenu loaded ", "ReportText");
             QALog.QATextLog("WhatWeDoAppDevSubMenuTest complete");
         }
 
-        [Test]
+        [Test, Order(103)]
         public void WhatWeDoAppManSubMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDAppManCAS();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#cas", driver.Url);
-            QALog.QATextLog("ClickWWDAppManCAS loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#cas", driver.Url, "ClickWWDAppManCAS loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManSAP();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#sap", driver.Url);
-            QALog.QATextLog("ClickWWDAppManSAP loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#sap", driver.Url, "ClickWWDAppManSAP loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManOracle();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#oracle", driver.Url);
-            QALog.QATextLog("ClickWWDAppManOracle loaded " + driver.Url);
-            driver.Navigate().Back();
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#oracle", driver.Url, "ClickWWDAppManOracle loaded ", "ReportText");
+            driver.Navigate().Back();            
             mainMenu.TestWWDAppManLIMS();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#lims", driver.Url);
-            QALog.QATextLog("ClickWWDAppManLIMS loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#lims", driver.Url, "ClickWWDAppManLIMS loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManDatabase();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#database", driver.Url);
-            QALog.QATextLog("ClickWWDAppManDatabase loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#database", driver.Url, "ClickWWDAppManDatabase loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManSalesforce();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#salesforce", driver.Url);
-            QALog.QATextLog("ClickWWDAppManSalesforce loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#salesforce", driver.Url, "ClickWWDAppManSalesforce loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManSharepoint();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#sharepoint", driver.Url);
-            QALog.QATextLog("ClickWWDAppManSharepoint loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#sharepoint", driver.Url, "ClickWWDAppManSharepoint loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManTrackWise();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/#trackwise", driver.Url);
-            QALog.QATextLog("ClickWWDAppManSharepoint loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/#trackwise", driver.Url, "ClickWWDAppManSharepoint loaded ", "ReportText");
             QALog.QATextLog("WhatWeDoAppManSubMenuTest complete");
         }
 
-        [Test]
+        [Test, Order(103)]
         public void WhatWeDoQASubMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDQAAutomation();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#qa-automation", driver.Url);
-            QALog.QATextLog("ClickWWDQAAutomation loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/#qa-automation", driver.Url, "ClickWWDQAAutomation loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDQAStrategy();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#qa-strategy", driver.Url);
-            QALog.QATextLog("ClickWWDQAStrategy loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/#qa-strategy", driver.Url, "ClickWWDQAStrategy loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDQASWTesting();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#software-testing", driver.Url);
-            QALog.QATextLog("ClickWWDQASWTesting loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/#software-testing", driver.Url, "ClickWWDQASWTesting loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDQASWPerfTest();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#performance-testing", driver.Url);
-            QALog.QATextLog("ClickWWDQASWPerfTest loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/#performance-testing", driver.Url, "ClickWWDAppManLIMS loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDQAMobileTest();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#mobile-testing", driver.Url);
-            QALog.QATextLog("ClickWWDQAMobileTest loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/#mobile-testing", driver.Url, "ClickWWDQAMobileTest loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDQAValidation();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/#validation", driver.Url);
-            QALog.QATextLog("ClickWWDQAValidation loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/#validation", driver.Url, "ClickWWDQAValidation loaded ", "ReportText");
             QALog.QATextLog("WhatWeDoQASubMenuTest complete");
         }
 
-        [Test]
+        [Test, Order(103)]
         public void WhatWeDoBIAnalyticsSubMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDBIAnalyticsMicroStrategy();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#micro-strategy", driver.Url);
-            QALog.QATextLog("ClickWWDBIAnalyticsMicroStrategy loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#micro-strategy", driver.Url, "ClickWWDBIAnalyticsMicroStrategy loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDBIAnalyticsInformatica();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#informatica", driver.Url);
-            QALog.QATextLog("ClickWWDBIAnalyticsInformatica loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#informatica", driver.Url, "ClickWWDBIAnalyticsInformatica loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDBIAnalyticsSAPHANA();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#sap-hana", driver.Url);
-            QALog.QATextLog("ClickWWDBIAnalyticsSAPHANA loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#sap-hana", driver.Url, "ClickWWDBIAnalyticsSAPHANA loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDBIAnalyticsMSBI();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#microsoft-bi", driver.Url);
-            QALog.QATextLog("ClickWWDBIAnalyticsMSBI loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#microsoft-bi", driver.Url, "ClickWWDBIAnalyticsMSBI loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDBIAnalyticsReporting();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#reporting", driver.Url);
-            QALog.QATextLog("ClickWWDBIAnalyticsReporting loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/#reporting", driver.Url, "ClickWWDBIAnalyticsReporting loaded ", "ReportText");
             QALog.QATextLog("WhatWeDoBIAnalyticsSubMenuTest complete");
         }
 
-        [Test]
+        [Test, Order(102)]
         public void WhatWeDoMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestWWDOverview();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/", driver.Url);
-            QALog.QATextLog("ClickWWDOverview loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/", driver.Url, "ClickWWDOverview loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppDevSubMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-development/", driver.Url);
-            QALog.QATextLog("ClickWWDAppDevSubMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-development/", driver.Url, "ClickWWDAppDevSubMenu loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDAppManSubMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/application-management/", driver.Url);
-            QALog.QATextLog("ClickWWDAppManSubMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/application-management/", driver.Url, "ClickWWDAppManSubMenu loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDQASubMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/quality-assurance/", driver.Url);
-            QALog.QATextLog("ClickWWDQASubMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/quality-assurance/", driver.Url, "ClickWWDQASubMenu loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestWWDBIAnalyticsSubMenu();
-            Assert.AreEqual("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/", driver.Url);
-            QALog.QATextLog("ClickWWDBIAnalyticsSubMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/what-we-do/business-intelligenceanalytics/", driver.Url, "ClickWWDBIAnalyticsSubMenu loaded ", "ReportText");
             driver.Navigate().Back();
-            //driver.Close();  Do not close primary session
             QALog.QATextLog("WhatWeDoMenuTest complete");
         }
 
-        [Test]
+        [Test, Order(104)]
         public void SmarterOutsourcingMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestSOOverview();
-            Assert.AreEqual("http://www.ruralsourcing.com/smarter-outsourcing/", driver.Url);
-            QALog.QATextLog("ClickSOOverview loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/smarter-outsourcing/", driver.Url, "ClickSOOverview loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestSOBenefits();
-            Assert.AreEqual("http://www.ruralsourcing.com/smarter-outsourcing/value-comparison/", driver.Url);
-            QALog.QATextLog("ClickSOBenefits loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/smarter-outsourcing/value-comparison/", driver.Url, "ClickSOBenefits loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestSOWhattoExpect();
-            Assert.AreEqual("http://www.ruralsourcing.com/smarter-outsourcing/what-to-expect/", driver.Url);
-            QALog.QATextLog("ClickSOWhattoExpect loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/smarter-outsourcing/what-to-expect/", driver.Url, "ClickSOWhattoExpect loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestSOFAQ();
-            Assert.AreEqual("http://www.ruralsourcing.com/smarter-outsourcing/frequently-asked-questions/", driver.Url);
-            QALog.QATextLog("ClickSOFAQ loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/smarter-outsourcing/frequently-asked-questions/", driver.Url, "ClickSOFAQ loaded ", "ReportText");
             QALog.QATextLog("SmarterOutsourcingMenuTest complete");
         }
 
-        [Test]
+        [Test, Order(105)]
         public void AboutRSIMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestAROverview();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/", driver.Url);
-            QALog.QATextLog("ClickAROverview loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/", driver.Url, "ClickAROverview loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARDevCenters();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/", driver.Url);
-            QALog.QATextLog("ClickARDevCentersSubMenu loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/", driver.Url, "ClickARDevCentersSubMenu loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARCommunity();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/community/", driver.Url);
-            QALog.QATextLog("ClickARCommunity loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/community/", driver.Url, "ClickARCommunity loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestAROurPartners();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/partners/", driver.Url);
-            QALog.QATextLog("ClickAROurPartners loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/partners/", driver.Url, "ClickAROurPartners loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestAROurLeadership();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/leadership/", driver.Url);
-            QALog.QATextLog("ClickAROurLeadership loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/leadership/", driver.Url, "ClickAROurLeadership loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARBoardOfDirectors();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/board-of-directors/", driver.Url);
-            QALog.QATextLog("ClickARBoardOfDirectors loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/board-of-directors/", driver.Url, "ClickARBoardOfDirectors loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARPressReleases();
-            Assert.AreEqual("http://www.ruralsourcing.com/press-releases/", driver.Url);
-            QALog.QATextLog("ClickARPressReleases loaded " + driver.Url);
-            driver.Navigate().Back();
+            LogReportAssert.Commit("http://www.ruralsourcing.com/press-releases/", driver.Url, "ClickARPressReleases loaded ", "ReportText");
+            driver.Navigate().Back(); 
             mainMenu.TestARNews();
-            Assert.AreEqual("http://www.ruralsourcing.com/news/", driver.Url);
-            QALog.QATextLog("ClickARNews loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/news/", driver.Url, "ClickARNews loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARAwards();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/awards/", driver.Url);
-            QALog.QATextLog("ClickARAwards loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/awards/", driver.Url, "ClickARAwards loaded ", "ReportText");
             QALog.QATextLog("AboutRSIMenuTest complete");          
         }
 
-        [Test]
+        [Test, Order(106)]
         public void AboutRSIDevCentersSubMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestARDCOurLocations();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/", driver.Url);
-            QALog.QATextLog("ClickARDCOurLocations loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/", driver.Url, "ClickARDCOurLocations loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARDCAlabama();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/alabama/", driver.Url);
-            QALog.QATextLog("ClickARDCAlabama loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/alabama/", driver.Url, "ClickARDCAlabama loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARDCArkansas();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/arkansas/", driver.Url);
-            QALog.QATextLog("ClickARDCArkansas loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/arkansas/", driver.Url, "ClickARDCArkansas loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARDCGeorgia();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/georgia/", driver.Url);
-            QALog.QATextLog("ClickARDCGeorgia loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/georgia/", driver.Url, "ClickARDCGeorgia loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARDCNewMexico();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/new-mexico/", driver.Url);
-            QALog.QATextLog("ClickARDCNewMexico loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/new-mexico/", driver.Url, "ClickARDCNewMexico loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestARDCWheresNext();
-            Assert.AreEqual("http://www.ruralsourcing.com/about-rsi/development-centers/wheres-next/", driver.Url);
-            QALog.QATextLog("ClickARDCWheresNext loaded " + driver.Url);
-            //driver.Close();  Do not close primary session
+            LogReportAssert.Commit("http://www.ruralsourcing.com/about-rsi/development-centers/wheres-next/", driver.Url, "ClickARDCWheresNext loaded ", "ReportText");
             QALog.QATextLog("AboutRSIDevCentersSubMenuTest complete");   
         }
 
-        [Test]
+        [Test, Order(107)]
         public void CareersMenuTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             mainMenu.TestCareersMenuOverview();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/", driver.Url);
-            QALog.QATextLog("ClickCMOverview loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/", driver.Url, "ClickCMOverview loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuJobSearch();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/job-search/", driver.Url);
-            QALog.QATextLog("ClickCMJobSearch loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/job-search/", driver.Url, "ClickCMJobSearch loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuApplication();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/job-search/application/", driver.Url);
-            QALog.QATextLog("ClickCMApplication loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/job-search/application/", driver.Url, "ClickCMApplication loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuYourBenefits();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/#benefits", driver.Url);
-            QALog.QATextLog("ClickCMYourBenefits loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/#benefits", driver.Url, "ClickCMYourBenefits loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuTraining();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/#training", driver.Url);
-            QALog.QATextLog("ClickCMTraining loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/#training", driver.Url, "ClickCMTraining loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuUniPartner();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/#partnerships", driver.Url);
-            QALog.QATextLog("ClickCMUniPartner loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/#partnerships", driver.Url, "ClickCMUniPartner loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuRSICulture();
-            Assert.AreEqual("http://www.ruralsourcing.com/careers/#culture", driver.Url);
-            QALog.QATextLog("ClickCMRSICulture loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/careers/#culture", driver.Url, "ClickCMRSICulture loaded ", "ReportText");
             driver.Navigate().Back();
             mainMenu.TestCareersMenuCareerEvents();
-            Assert.AreEqual("http://www.ruralsourcing.com/career-events/", driver.Url);
-            QALog.QATextLog("ClickCMCareerEvents loaded " + driver.Url);
+            LogReportAssert.Commit("http://www.ruralsourcing.com/career-events/", driver.Url, "ClickCMCareerEvents loaded ", "ReportText");
             driver.Navigate().Back();
-            //driver.Close();  Do not close primary session
             QALog.QATextLog("CareersMenuTest complete"); 
         }
 
-        [Test]
+        [Test, Order(108)]
         public void WhatWeDoOverviewPageTest()
         {
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             var overviewPage = new OverviewPage(driver);
+            QALog.QATextLog("WhatWeDoOverviewPageTest complete");
         }
     }
 }
