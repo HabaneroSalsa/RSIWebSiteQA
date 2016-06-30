@@ -109,7 +109,7 @@
     <Compile Include="PageObjects\1-SmarterOutsourcing\SmarterOutsourcingFAQPage.cs" />
     <Compile Include="PageObjects\1-SmarterOutsourcing\SmarterOutsourcingWhatToExpectPage.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Reporting.cs" />
+    <Compile Include="Reports\QAReport.cs" />
     <Compile Include="TestCases.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextLogging\Logger.cs" />
