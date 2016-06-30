@@ -1,13 +1,13 @@
 ﻿    using NUnit.Framework;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
-    using OpenQA.Selenium.Interactions; //  var act = new Actions(driver);  AWESOME
+    using OpenQA.Selenium.Interactions;
     using OpenQA.Selenium.Support.UI;
     using RelevantCodes.ExtentReports;
     using RSIWebSiteQA.PageObjects;
     using RSIWebSiteQA.PageObjects._0_WhatWeDo;
     using RSIWebSiteQA.TextLogging;
-    using RSIWebSiteQA.Reporting;
+    //using RSIWebSiteQA.Reporting;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -106,6 +106,7 @@ namespace RSIWebSiteQA
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
             driver = new ChromeDriver(options);
+                       
             string HTMLLogFile = QALog.ReportFileLocation;
             var extent = new ExtentReports(HTMLLogFile, false, DisplayOrder.NewestFirst);
             extent.AddSystemInfo("Selenium Version", "2.53.0")
@@ -114,13 +115,16 @@ namespace RSIWebSiteQA
                   .AddSystemInfo("Environment", "Local")
                   .AddSystemInfo("Browser", "Chrome");
             var testSuite = extent.StartTest("RSIWebSiteQA <b>" + string.Format("[{0:yyyy-MM-dd HH:mm:ss.ffff}] ", DateTime.Now) +
-                "Suite Objective:</b><br/>Validate all menu links.<br/>Validate all page loads.<br/>Validate all page controls and content.");
+                "<br/>Suite Objective:</b><br/>Validate all menu links.<br/>Validate all page loads.<br/>Validate all page controls and content.");
             testSuite.AssignCategory("Functional", "Regression", "Training")
                      .AssignAuthor("Rick Johnson")
                      .Log(LogStatus.Info, "Log file location:<br/>" + HTMLLogFile);
+
+            testSuite.Log(LogStatus.Pass, "TEST LOG");
+            extent.EndTest(testSuite); 
+            extent.Flush();
+            extent.Close();
             
-
-
         }
 
         [OneTimeTearDown]
@@ -129,7 +133,7 @@ namespace RSIWebSiteQA
             driver.Close();
             QALog.QATextLog("Test Suite finished");
             // Finish off report with extent.Flush
-            
+           
             //extent.EndTest(testSuite); 
             //extent.Flush();
             //extent.Close();

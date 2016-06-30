@@ -159,7 +159,7 @@ namespace RSIWebSiteQA.PageObjects
         public MainMenu(IWebDriver driver)
         {
             this.driver = driver;
-            PageFactory.InitElements(driver, this);
+            PageFactory.InitElements(driver, this);           
         }
 
         public void ClickWhatWeDoMenu()
@@ -207,16 +207,24 @@ namespace RSIWebSiteQA.PageObjects
             ApplyNowMenu.Click();
         }
 
+
+        public static Func<IWebDriver, IWebElement> ElementIsClickable(By locator)
+        {
+            return driver =>
+            {
+                var element = driver.FindElement(locator);
+                return (element != null && element.Displayed && element.Enabled) ? element : null;
+            };
+        }
+
+
         public void HoverWhatWeDo()
         {
-            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(1000));
-            //var element = wait.Until(ExpectedConditions.ElementIsVisible(SmarterOutsourcingMenu));
             Actions builder = new Actions(driver);
             Actions hoverMainMenu = builder.MoveToElement(WhatWeDoMenu);
             hoverMainMenu.Build().Perform();
-            Thread.Sleep(600);
-            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(1000));
-            //var element = wait.Until(ExpectedConditions.ElementIsVisible(WWDBIAnalyticsSubMenu));    
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(WWDBIAnalyticsSubMenu.GetAttribute("id"))));
         }
 
         public void HoverWWDAppDevSubMenu()
@@ -224,7 +232,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDAppDevSubMenu = builder.MoveToElement(WWDAppDevSubMenu);
             hoverWWDAppDevSubMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(WWDAppDevPHP.GetAttribute("id"))));
         }
 
         public void HoverWWDAppManSubMenu()
@@ -232,7 +241,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDAppManSubMenu = builder.MoveToElement(WWDAppManSubMenu);
             hoverWWDAppManSubMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(WWDAppManTrackWise.GetAttribute("id"))));
         }
 
         public void HoverWWDQASubMenu()
@@ -240,7 +250,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDQASubMenu = builder.MoveToElement(WWDQASubMenu);
             hoverWWDQASubMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(WWDQAValidation.GetAttribute("id"))));
         }
 
         public void HoverWWDBIAnalyticsSubMenu()
@@ -248,7 +259,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverWWDBIAnalyticsSubMenu = builder.MoveToElement(WWDBIAnalyticsSubMenu);
             hoverWWDBIAnalyticsSubMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(WWDBIAnalyticsReporting.GetAttribute("id"))));
         }
        
         public void HoverSmarterOutsourcingMenu()
@@ -256,7 +268,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverSmarterOutsourcingMenu = builder.MoveToElement(SmarterOutsourcingMenu);
             hoverSmarterOutsourcingMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(SOFAQ.GetAttribute("id"))));
         }
 
         public void HoverAboutRSIMenu()
@@ -264,7 +277,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverAboutRSIMenu = builder.MoveToElement(AboutRSIMenu);
             hoverAboutRSIMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ARAwards.GetAttribute("id"))));
         }
 
         public void HoverARDevCentersSubMenu()
@@ -272,7 +286,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverARDevCentersSubMenu = builder.MoveToElement(ARDevCentersSubMenu);
             hoverARDevCentersSubMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(ARDCWheresNext.GetAttribute("id"))));
         }
 
         public void HoverCareersMenu()
@@ -280,7 +295,8 @@ namespace RSIWebSiteQA.PageObjects
             Actions builder = new Actions(driver);
             Actions hoverCareersMenu = builder.MoveToElement(CareersMenu);
             hoverCareersMenu.Build().Perform();
-            Thread.Sleep(600);
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            var clickableElement = wait.Until(ExpectedConditions.ElementIsVisible(By.Id(CMcareerEvents.GetAttribute("id"))));
         }
 
         public void ClickWWDOverview()
