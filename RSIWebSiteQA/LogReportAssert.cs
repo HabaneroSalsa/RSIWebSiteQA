@@ -10,19 +10,6 @@ namespace RSIWebSiteQA
 {
     public class LogReportAssert
     {
-        ExtentReports extent;
-        // data sent here: Assert expected / actual criteria
-        //                 Values for log data
-        //                 Values for report data
-        // if assert criteria is true
-        // then
-        // append relevant log file success data
-        // append relevant report success data 
-        // else 
-        // append relevant log file fail data
-        // append relevant report fail data 
-        // perform the assert
-        // return data back?
         public static void Commit(ExtentTest testCase, string ExpectedAssert, string ActualAssert, string LogText, string ReportText)
         {
             if (ExpectedAssert == ActualAssert)
