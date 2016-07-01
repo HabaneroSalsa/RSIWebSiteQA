@@ -116,7 +116,7 @@ namespace RSIWebSiteQA
         [OneTimeTearDown]
         public void TestTearDown()
         {
-            driver.Close();
+            //driver.Close();
             QALog.QATextLog("Test Suite finished");
             extent.Flush();
             extent.Close();
@@ -559,11 +559,38 @@ namespace RSIWebSiteQA
         [Test, Order(108)]
         public void WhatWeDoOverviewPageTest()
         {
+            // get text from both fields in the slide and validate
+            // get topic title text and validate
+            // get text from the 3 paragraphs and validate
+            // expand each subtopic and validate the contained text
+            // Test Search
+            // Test FAQ
+
             QALog.QATextLog("WhatWeDoOverviewPageTest started");
             var caseWhatWeDoOverviewPageTest = extent.StartTest("What We Do Overview Page Test");
             driver.Url = ConfigurationManager.AppSettings["URL"];
             var mainMenu = new MainMenu(driver);
             var overviewPage = new OverviewPage(driver);
+            mainMenu.HoverWhatWeDo();
+            mainMenu.ClickWWDOverview();
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "http://www.ruralsourcing.com/what-we-do/",
+                driver.Url, "ClickWWDOverview loaded ", "ReportText");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Domestic sourcing is...", overviewPage.GetSlideText1(), "GetSlideText1 is: ", "");
+            //LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "The smarter way to grow.", overviewPage.GetSlideText2(), "GetSlideText2 is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Agile development. Speed to market.", overviewPage.GetTopicTitle(), "GetTopicTitle is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "From software application development to ongoing support and maintenance of critical business applications, RSI offers a wide range of highly specialized IT services for companies across a variety of industries. We also provide QA Testing and Business Intelligence and Analytics services.", overviewPage.GetTopicParagraph1(), "GetTopicParagraph1 is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "RSI provides a high-level of customer service and a cost-effective alternative to offshore IT outsourcing, where they can benefit from common time zones. The cost of ownership between domestic sourcing and outsourcing overseas is quite comparable.", overviewPage.GetTopicParagraph2(), "GetTopicParagraph2 is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Contact us today to discover how domestic insourcing can benefit your organization.", overviewPage.GetTopicParagraph3(), "GetTopicParagraph3 is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Recommended Reading", overviewPage.GetLinkListTitle(), "GetLinkListTitle is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Seven facts you may not have considered about domestic sourcing", overviewPage.GetFAQLinkText(), "GetFAQLinkText is: ", "");
+            overviewPage.ClickAppDevExpander();
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "RSI relies on the Agile development methodology to guide our application development process. Agile enables us to be flexible when building new applications, supporting or enhancing existing applications, or replatforming antiquated systems onto robust, scalable and modern platforms.", overviewPage.GetAppDevText(), "GetAppDevText is: ", "");
+            overviewPage.ClickAppManExpander();
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Our clients select RSI to assist to help them manage the costs and complexities of enhancing and supporting enterprise applications such as SAP®, CAS® and Oracle®.", overviewPage.GetAppManText(), "GetAppManText is: ", "");
+            overviewPage.ClickQAExpander();
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Through our domestic sourcing model, RSI is able to provide superior testing services that go live faster without sacrificing quality. Our testing services include ERP Testing, Security & Privacy Testing, Automated Testing, Script Use Case Development, Script Use Case Execution, Usability, and Documentation. Our QA team relies heavily on Agile practices and is involved from the beginning of every project in order to ensure any bugs or errors are discovered or even avoided in the early stages.", overviewPage.GetQAText(), "GetQAText is: ", "");
+            overviewPage.ClickBIExpander();
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Our experienced consultants provide domestic sourcing services to meet ever-changing client Business Intelligence and Analytics needs, such as SAP Net Weaver BW, BusinessObjects, and Microsoft SQL Server Reporting Services.", overviewPage.GetBIText(), "GetBIText is: ", "");
             caseWhatWeDoOverviewPageTest.Log(LogStatus.Info, "WhatWeDoOverviewPageTest completed");
             QALog.QATextLog("WhatWeDoOverviewPageTest completed");
             extent.EndTest(caseWhatWeDoOverviewPageTest);
