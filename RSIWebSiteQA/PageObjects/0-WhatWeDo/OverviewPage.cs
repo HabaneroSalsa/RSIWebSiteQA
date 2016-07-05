@@ -1,10 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RSIWebSiteQA.PageObjects._0_WhatWeDo
@@ -78,6 +80,7 @@ namespace RSIWebSiteQA.PageObjects._0_WhatWeDo
 
         public string GetSlideText2()
         {
+            Thread.Sleep(3000);  // wait for element to stop moving
             string slideText2 = SlideText2.Text;
             return slideText2;
         }

@@ -104,6 +104,8 @@ namespace RSIWebSiteQA
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
             driver = new ChromeDriver(options);
+            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10)); // wait up to 10 seconds for an element to become present in the DOM
+            driver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(10)); // up to 10 second wait for javascript elements to be visible and enabled/clickable
             QALog.QATextLog("Test Suite started");
             string HTMLLogFile = QALog.ReportFileLocation;
             extent = new ExtentReports(HTMLLogFile, true, DisplayOrder.NewestFirst);     
@@ -563,8 +565,8 @@ namespace RSIWebSiteQA
             // get topic title text and validate
             // get text from the 3 paragraphs and validate
             // expand each subtopic and validate the contained text
-            // Test Search
             // Test FAQ
+            // Testing search will be a separate case 
 
             QALog.QATextLog("WhatWeDoOverviewPageTest started");
             var caseWhatWeDoOverviewPageTest = extent.StartTest("What We Do Overview Page Test");
@@ -576,7 +578,7 @@ namespace RSIWebSiteQA
             LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "http://www.ruralsourcing.com/what-we-do/",
                 driver.Url, "ClickWWDOverview loaded ", "ReportText");
             LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Domestic sourcing is...", overviewPage.GetSlideText1(), "GetSlideText1 is: ", "");
-            //LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "The smarter way to grow.", overviewPage.GetSlideText2(), "GetSlideText2 is: ", "");
+            LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "The smarter way to grow.", overviewPage.GetSlideText2(), "GetSlideText2 is: ", "");
             LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "Agile development. Speed to market.", overviewPage.GetTopicTitle(), "GetTopicTitle is: ", "");
             LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "From software application development to ongoing support and maintenance of critical business applications, RSI offers a wide range of highly specialized IT services for companies across a variety of industries. We also provide QA Testing and Business Intelligence and Analytics services.", overviewPage.GetTopicParagraph1(), "GetTopicParagraph1 is: ", "");
             LogReportAssert.Commit(caseWhatWeDoOverviewPageTest, "RSI provides a high-level of customer service and a cost-effective alternative to offshore IT outsourcing, where they can benefit from common time zones. The cost of ownership between domestic sourcing and outsourcing overseas is quite comparable.", overviewPage.GetTopicParagraph2(), "GetTopicParagraph2 is: ", "");
@@ -595,5 +597,41 @@ namespace RSIWebSiteQA
             QALog.QATextLog("WhatWeDoOverviewPageTest completed");
             extent.EndTest(caseWhatWeDoOverviewPageTest);
         }
+
+        [Test, Order(109)]
+        public void ApplicationDevelopmentPageTest()
+        {
+            QALog.QATextLog("ApplicationDevelopmentPageTest started");
+            var caseApplicationDevelopmentPageTest = extent.StartTest("Application Development Page Test");
+            driver.Url = ConfigurationManager.AppSettings["URL"];
+            var mainMenu = new MainMenu(driver);
+            var overviewPage = new OverviewPage(driver);
+            var appDevPage  = new ApplicationDevelopmentPage(driver);
+            mainMenu.HoverWhatWeDo();
+            mainMenu.ClickWWDAppDevSubMenu();
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "http://www.ruralsourcing.com/what-we-do/application-development/",
+                driver.Url, "ClickWWDAppDevSubMenu loaded ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Application Development", appDevPage.GetADTitle(), "GetADTitle is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Delivering results", appDevPage.GetADMainTopicTitle(), "GetADMainTopicTitle is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Companies across the United States have turned to Rural Sourcing, Inc. to guide them through the often complex realm of software and application development.", appDevPage.GetADParagraph1Text(), "GetADParagraph1Text is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "RSI relies on the Agile and Scrum software development methodologies. Our approach to application development means our teams are light, nimble and are always working toward the next benchmark. Agile allows us to be flexible when building new applications, supporting or enhancing existing applications, or replatforming antiquated systems onto robust, scalable and modern platforms.", appDevPage.GetADParagraph2Text(), "GetADParagraph2Text is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Our developers stay up-to-date on all of the major platforms, including .NET, J2EE, PHP, iOS, Objective C, PL/SQL, Visual Basic, JavaScript, HTML5 and the latest mobile trends. Our clients benefit from the latest technologies.", appDevPage.GetADParagraph3Text(), "GetADParagraph3Text is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Our process", appDevPage.GetADSubTopicTitle(), "GetADSubTopicTitle is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Our flexible service model allows clients to choose the optimal approach to meet demand. These options range from fully outsourced support with SLA driven management to flexible hour blocks for specified time periods.", appDevPage.GetADParagraph4Text(), "GetADParagraph4Text is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "In certain cases, RSI’s clients are able to complement their in-house teams with RSI expertise. Our support provides the additional support necessary to reduce costs while maintaining high customer service levels. RSI also enables companies to focus on new ventures and projects while our team maintains the current production system.", appDevPage.GetADParagraph5Text(), "GetADParagraph5Text is ", "");
+            LogReportAssert.Commit(caseApplicationDevelopmentPageTest, "Contact us today to learn more about our Application Development services and how our team can benefit your organization.", appDevPage.GetADParagraph6Text(), "GetADParagraph6Text is ", "");
+            appDevPage.ClickJavaExpander();
+          
+            appDevPage.ClickDotNetExpander();
+            appDevPage.ClickMobileExpander();
+            appDevPage.ClickWebExpander();
+            appDevPage.ClickPHPExpander();
+
+            caseApplicationDevelopmentPageTest.Log(LogStatus.Info, "ApplicationDevelopmentPageTest completed");
+            QALog.QATextLog("ApplicationDevelopmentPageTest completed");
+            extent.EndTest(caseApplicationDevelopmentPageTest);
+        
+        }
+
     }
 }
